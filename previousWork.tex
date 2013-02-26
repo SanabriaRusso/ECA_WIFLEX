@@ -1,0 +1,5 @@
+Collisions are the main cause of throughput degradation in WLANs, specifically because they lead to delays related to retransmission attempts. Therefore, receivers are forced to respond with an \emph{acknowledgement} (ACK) message if they are able to effectively decode the message from the sender, which the sender interprets as a indicator for continuing transmissions of the remaining packets in the queue. 
+
+%ACKs are the only feedback CSMA/CA has in order to determine the result of the transmission attempt.
+
+CSMA/CA uses a Binary Exponential Backoff (BEB) algorithm to treat collitions. This algorithm reduces the probability that a colliding contender picks the same backoff counter than a successful station; thus reducing the collision probability. It is based on the feedback provided by the receivers (ACKs), if none is received then the pool of available backoff counter values doubles, thus reducing the probability that the colliding contenders randomly pick the same backoff counter. 
