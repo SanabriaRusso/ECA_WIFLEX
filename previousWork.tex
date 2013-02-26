@@ -1,5 +1,16 @@
-Collisions are the main cause of throughput degradation in WLANs, specifically because they lead to delays related to retransmission attempts. Therefore, receivers are forced to respond with an \emph{acknowledgement} (ACK) message if they are able to effectively decode the message from the sender, which the sender interprets as a indicator for continuing transmissions of the remaining packets in the queue. 
+Collisions are the main cause of throughput degradation in WLANs, specifically because they lead to delays related to retransmission attempts. Therefore, receivers are forced to respond with an \emph{acknowledgement} (ACK) if they are able to effectively decode the message from the sender, which the sender interprets as a indicator for continuing transmissions of the remaining packets in the queue. 
 
 %ACKs are the only feedback CSMA/CA has in order to determine the result of the transmission attempt.
 
-CSMA/CA uses a Binary Exponential Backoff (BEB) algorithm to treat collitions. This algorithm reduces the probability that a colliding contender picks the same backoff counter than a successful station; thus reducing the collision probability. It is based on the feedback provided by the receivers (ACKs), if none is received then the pool of available backoff counter values doubles, thus reducing the probability that the colliding contenders randomly pick the same backoff counter. 
+CSMA/CA uses a Binary Exponential Backoff (BEB) algorithm to treat collitions. This algorithm reduces the probability that colliding contenders pick the same backoff counter; thus reducing the collision probability. It is based on the feedback provided by the receivers (ACKs); if none is received, then the range of available backoff counter values doubles. Equation~(\ref{CW}) and~(\ref{BEB}) show how this range increases by augmenting the \emph{backoff stage} ($k$) upon every collision up to the maximum backoff stage ($m=k=5$).
+
+%thus reducing the probability that the colliding contenders randomly pick the same backoff counter.
+
+\begin{subequations}
+\begin{align}
+	CW(k)= 2^{k}CW_{\min},\label{CW}\\
+	B\in[0,CW(k)-1]\label{BEB}
+\end{align}
+\end{subequations}
+
+In (\ref{CW}), $CW_{\min}$ is called the \emph{minimum contention window} and has a typical value equal to $16$; $k\in[0,m]$ is the backoff stage. This means that $CW(k)$ doubles upon each collision until $k=m$. Therefore, $B$ in~(\ref{BEB}) can be randomly chosen from a wider range of values.
