@@ -1,1 +1,1 @@
-LaTeX files for the paper for WIFLEX.
+LaTeX files for the paper to WIFLEX.
