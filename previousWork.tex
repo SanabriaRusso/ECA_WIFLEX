@@ -1,4 +1,4 @@
-Collisions are the main cause of throughput degradation in WLANs, specifically because they lead to delays related to retransmission attempts. Therefore, receivers are forced to respond with an \emph{acknowledgement} (ACK) if they are able to effectively decode the message from the sender, which the sender interprets as a indicator for continuing transmissions of the remaining packets in the queue. 
+Collisions are the main cause of throughput degradation in WLANs, specifically because they lead to delays related to retransmission attempts. Therefore, receivers are forced to respond with an \emph{acknowledgement} (ACK) if they are able to effectively decode the message, which the sender interprets as a indicator for continuing transmissions of the remaining packets in the queue. 
 
 %ACKs are the only feedback CSMA/CA has in order to determine the result of the transmission attempt.
 
@@ -13,4 +13,12 @@ CSMA/CA uses a Binary Exponential Backoff (BEB) algorithm to treat collitions. T
 \end{align}
 \end{subequations}
 
-In (\ref{CW}), $CW_{\min}$ is called the \emph{minimum contention window} and has a typical value equal to $16$; $k\in[0,m]$ is the backoff stage. This means that $CW(k)$ doubles upon each collision until $k=m$. Therefore, $B$ in~(\ref{BEB}) can be randomly chosen from a wider range of values.
+In (\ref{CW}), $CW_{\min}$ is called the \emph{minimum contention window} and has a typical value equal to $16$; $k\in[0,m]$ is the backoff stage. This means that $CW(k)$ doubles upon each collision until $k=m$. Therefore, $B$ in~(\ref{BEB}) can be randomly chosen from a wider range of values. On the other hand, CSMA/CA resets the backoff stage ($k=0$) after a successful transmission, in turn causing $CW(0)=CW_{\min}$.
+
+Many works have assessed CSMA/CA in order to increase the offered throughput. Some of then, like~\cite{bharghavan1994map,wang2004ncr}, do not reset the backoff stage after successful transmissions in order to increase the throughput of the system. Although achieving its goal under saturated conditions, this measure causes an uneven distribution of the system resources by forcing some contenders to wait longer than others to attempt transmission.
+
+By making rough estimations on the number of contenders, the works represented here by~\cite{cali2000dti,lopez-toledo2006aoi} use this information to adjust the different contention parameters. Nevertheless, this measure increases the complexity of the implementation and loses considerable accuracy under channel errors.
+
+It is possible to achieve higher throughput than CSMA/CA by using a deterministic backoff counter after successful transmissions. This measure reduces the collision probability of successful nodes and allows the system to reach  collision-free operation. This approach is called Carrier Sense Multiple Access with Enhanced Collision Avoidance (CSMA/ECA) an was first introduced in~\cite{barcelo2008lba}. Many other studies have been made to CSMA/ECA, including performance evaluation under saturated and non-saturate scenarios~\cite{bellalta2009vtc}, fairness~\cite{he2009srb,barcelo2010fcc,fang2011dlm} and considering the Auto Rate Fallback mechanism in a more realistic channel model~\cite{martorell2012pec,martorell2012tfl}.
+
+Nevertheless, CSMA/ECA seize to operate in a collision-free state when the number of contenders is equal to the deterministic backoff counter. When this happens, the collisions increase and the system performance starts to approximate to the one achieved by CSMA/CA.
